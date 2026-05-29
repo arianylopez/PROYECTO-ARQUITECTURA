@@ -28,10 +28,31 @@ namespace PlataformaWeb.API.Services
         {
             var user = await _repository.GetUserByEmailAsync(loginDto.Email);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
+            // CHISMOSO 1: ¿Encontró al usuario?
+            if (user == null)
             {
+                Console.WriteLine($"\n[DEBUG] NO SE ENCONTRÓ EL USUARIO: {loginDto.Email}\n");
                 return null;
             }
+
+            Console.WriteLine($"\n[DEBUG] USUARIO ENCONTRADO. Hash en BD: {user.PasswordHash}\n");
+
+            // CHISMOSO 2: ¿Coincide la contraseña?
+            Console.WriteLine($"\n[DEBUG] CONTRASEÑA RECIBIDA DEL FRONTEND: {loginDto.Password}");
+
+            // ESTA LÍNEA ES LA CLAVE: Generamos el hash real en vivo
+            var hashReal = BCrypt.Net.BCrypt.HashPassword(loginDto.Password);
+            Console.WriteLine($"[DEBUG] EL HASH REAL QUE DEBE IR EN LA BD ES: {hashReal}\n");
+
+            bool isValidPassword = BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash);
+
+            if (!isValidPassword)
+            {
+                Console.WriteLine("\n[DEBUG] LA CONTRASEÑA NO COINCIDE CON EL HASH\n");
+                return null;
+            }
+
+            Console.WriteLine("\n[DEBUG] ¡LOGIN EXITOSO! Generando Token...\n");
 
             var token = GenerateJwtToken(user);
 

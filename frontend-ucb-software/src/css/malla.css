@@ -1,0 +1,132 @@
+/* src/css/malla.css */
+.malla-header {
+  margin-bottom: 32px;
+}
+
+.malla-header h1 {
+  font-size: 28px;
+  color: var(--ucb-primary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.malla-header p {
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+/* Grid responsivo para los semestres */
+.semestres-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* Tarjeta de Semestre (Estilo Wireframe Materias 3) */
+.semestre-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  transition: box-shadow 0.3s ease;
+}
+
+.semestre-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.semestre-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* El cuadro azul/amarillo con el número del semestre */
+.semestre-badge {
+  background: var(--ucb-primary);
+  color: white;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+.semestre-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.semestre-title h2 {
+  font-size: 18px;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.semestre-title span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Lista de Materias */
+.materias-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.materia-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text-main);
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.materia-item i {
+  color: var(--ucb-primary);
+  font-size: 18px;
+}
+
+.materia-item:hover {
+  background: #EEF2F6;
+  color: var(--ucb-primary);
+}
+
+/* Loader */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  color: var(--text-muted);
+  gap: 16px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border-light);
+  border-top: 4px solid var(--ucb-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
