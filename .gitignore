@@ -1,0 +1,28 @@
+# ==========================================
+# ARCHIVO .GITIGNORE PARA .NET Y VISUAL STUDIO
+# ==========================================
+
+# Carpetas ocultas de IDEs
+.vs/
+.vscode/
+.idea/
+
+# Carpetas de compilación de .NET (¡Muy importante ignorarlas!)
+[Bb]in/
+[Oo]bj/
+out/
+
+# Archivos de configuración de usuario local
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# Archivos temporales y logs
+*.log
+*.cache
+*.tmp
+
+# Archivos del sistema operativo (macOS/Windows)
+.DS_Store
+Thumbs.db
