@@ -42,5 +42,32 @@ namespace PlataformaWeb.API.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        [HttpGet("posts")]
+        public async Task<ActionResult<IEnumerable<PostDto>>> GetAllPosts()
+        {
+            var posts = await _facade.GetAllPostsAsync();
+            return Ok(posts);
+        }
+
+        [HttpDelete("posts/{id}")]
+        public async Task<ActionResult> DeletePost(Guid id)
+        {
+            var success = await _facade.DeletePostAsync(id);
+            if (!success)
+            {
+                return NotFound(new { error = "La publicación no existe." });
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("posts/{id}")]
+        public async Task<ActionResult<PostDto>> UpdatePost(Guid id, [FromBody] UpdatePostDto dto)
+        {
+            var updatedPost = await _facade.UpdatePostAsync(id, dto);
+            if (updatedPost == null) return NotFound(new { error = "La publicación no existe." });
+            return Ok(updatedPost);
+        }
     }
 }

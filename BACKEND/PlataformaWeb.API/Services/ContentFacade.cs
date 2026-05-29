@@ -11,6 +11,9 @@ namespace PlataformaWeb.API.Services
         Task<IEnumerable<PostDto>> GetUpcomingEventsAsync();
         Task<IEnumerable<PostDto>> GetHistoricalEventsAsync();
         Task<PostDto> CreatePostAsync(CreatePostDto dto);
+        Task<IEnumerable<PostDto>> GetAllPostsAsync();
+        Task<bool> DeletePostAsync(Guid id);
+        Task<PostDto?> UpdatePostAsync(Guid id, UpdatePostDto dto);
     }
 
     public class ContentFacade : IContentFacade
@@ -56,8 +59,45 @@ namespace PlataformaWeb.API.Services
                 EventEndDate = p.EventEndDate,
                 Location = p.Location,
                 ExternalRegistrationUrl = p.ExternalRegistrationUrl,
-                CreatedAt = p.CreatedAt
+                CreatedAt = p.CreatedAt,
+                IsPublished = p.IsPublished // <-- NUEVA LÍNEA AGREGADA
             });
+        }
+        // 1. Agrega los métodos nuevos a la clase
+        public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
+        {
+            var posts = await _repository.GetAllPostsAsync();
+            return MapToDto(posts);
+        }
+
+        public async Task<bool> DeletePostAsync(Guid id)
+        {
+            return await _repository.DeletePostAsync(id);
+        }
+        public async Task<PostDto?> UpdatePostAsync(Guid id, UpdatePostDto dto)
+        {
+            var post = await _repository.GetPostByIdAsync(id);
+            if (post == null) return null;
+
+            post.Type = dto.Type;
+            post.Title = dto.Title;
+            post.Content = dto.Content;
+            post.CoverImageUrl = dto.CoverImageUrl;
+
+            // ¡AQUÍ ESTÁ LA MAGIA! Convertimos a UTC
+            post.EventStartDate = dto.EventStartDate?.ToUniversalTime();
+            post.EventEndDate = dto.EventEndDate?.ToUniversalTime();
+
+            post.Location = dto.Location;
+            post.ExternalRegistrationUrl = dto.ExternalRegistrationUrl;
+            post.IsPublished = dto.IsPublished;
+
+            // Y esto siempre es UTC por defecto
+            post.UpdatedAt = DateTime.UtcNow;
+
+            await _repository.UpdatePostAsync(post);
+
+            return MapToDto(new List<Post> { post }).First();
         }
     }
 }

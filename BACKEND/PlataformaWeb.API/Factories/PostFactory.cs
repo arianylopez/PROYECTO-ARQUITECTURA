@@ -17,7 +17,9 @@ namespace PlataformaWeb.API.Factories
                 Type = dto.Type.ToUpper(),
                 IsPublished = true, 
                 PublishedAt = DateTime.UtcNow,
-                CreatedAt = DateTime.UtcNow
+                EventStartDate = dto.EventStartDate?.ToUniversalTime(),
+                EventEndDate = dto.EventEndDate?.ToUniversalTime(),
+                CreatedAt = DateTime.UtcNow,
             };
 
             if (post.Type == "EVENT")

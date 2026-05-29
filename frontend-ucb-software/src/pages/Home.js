@@ -2,6 +2,8 @@
 import '../css/home.css';
 import { getBanners } from '../services/multimediaService.js';
 
+const heroText = localStorage.getItem('ucb_home_hero_text') || 'Desarrolla sistemas robustos, lidera proyectos tecnológicos y transforma el futuro digital con una sólida base científica, técnica y ética.';
+
 export const renderHome = async (container) => {
   // 1. Renderizar la estructura base con un "spinner" en la zona de la imagen
   container.innerHTML = `
@@ -12,10 +14,9 @@ export const renderHome = async (container) => {
             <i class="ph ph-code" style="font-size: 32px; color: var(--ucb-primary);"></i>
           </div>
           <h1>INGENIERÍA DE SOFTWARE</h1>
-          <p>
-            Desarrolla sistemas robustos, lidera proyectos tecnológicos y transforma 
-            el futuro digital con una sólida base científica, técnica y ética.
-          </p>
+          
+          <p>${heroText}</p>
+          
         </div>
         
         <div class="home-hero-image" id="hero-banner-container" style="overflow: hidden; position: relative;">

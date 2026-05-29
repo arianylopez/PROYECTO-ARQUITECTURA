@@ -27,6 +27,7 @@ namespace PlataformaWeb.API.Models
         public string? ExternalRegistrationUrl { get; set; }
         public bool IsPublished { get; set; }
         public DateTime? PublishedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public User? Author { get; set; }
