@@ -1,5 +1,5 @@
 // src/services/api.js
-const BASE_URL = 'http://localhost:5096/api';
+const BASE_URL = 'https://localhost:7269/api'
 
 export const fetchAPI = async (endpoint, options = {}) => {
   const token = localStorage.getItem('ucb_admin_token');

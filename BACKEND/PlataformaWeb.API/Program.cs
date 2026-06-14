@@ -53,17 +53,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5173") 
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowViteFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // El puerto exacto de tu frontend
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
-var app = builder.Build();
 
-app.UseCors("AllowFrontend");
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -72,6 +70,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowViteFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
