@@ -59,5 +59,20 @@ namespace PortalInfoSoftware.API.Controllers
             await _eventosService.EliminarEventoAsync(id);
             return NoContent();
         }
+
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEvento(Guid id, [FromBody] EventoCreateDTO dto)
+        {
+            try
+            {
+                await _eventosService.ActualizarEventoAsync(id, dto);
+                return Ok(new { mensaje = "Evento actualizado exitosamente" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace PortalInfoSoftware.Application.Strategies
     {
         public IQueryable<Evento> AplicarFiltro(IQueryable<Evento> query)
         {
-            return query.Where(e => e.FechaInicio >= DateTime.UtcNow)
+            return query.Where(e => e.FechaFin >= DateTime.UtcNow)
                         .OrderBy(e => e.FechaInicio);
         }
     }

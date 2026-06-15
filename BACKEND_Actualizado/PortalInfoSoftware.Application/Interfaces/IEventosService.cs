@@ -8,5 +8,6 @@ namespace PortalInfoSoftware.Application.Interfaces
         Task<EventoPublicoDTO?> ObtenerEventoPorIdAsync(Guid id);
         Task<EventoPublicoDTO> CrearEventoAsync(EventoCreateDTO dto, Guid autorId);
         Task EliminarEventoAsync(Guid id);
+        Task ActualizarEventoAsync(Guid id, EventoCreateDTO dto);
     }
 }

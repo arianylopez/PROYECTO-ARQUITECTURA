@@ -8,6 +8,20 @@ namespace PortalInfoSoftware.Infrastructure.Seeders
     {
         public static async Task SeedAsync(ApplicationDbContext context)
         {
+            if (!await context.Administradores.AnyAsync())
+            {
+                var admin = new Administrador
+                {
+                    Email = "admin@ucb.edu.bo",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!"),
+                    FirstName = "Admin",
+                    LastName = "Sistema",
+                    IsActive = true
+                };
+                await context.Administradores.AddAsync(admin);
+                await context.SaveChangesAsync();
+            }
+
             if (await context.Materias.AnyAsync())
             {
                 return;
@@ -100,19 +114,6 @@ namespace PortalInfoSoftware.Infrastructure.Seeders
                 new MateriaPrerrequisito { MateriaId = isw221.Id, PrerrequisitoId = mat142.Id },
                 new MateriaPrerrequisito { MateriaId = isw221.Id, PrerrequisitoId = mat301.Id }
             };
-
-            if (!await context.Administradores.AnyAsync())
-            {
-                var admin = new Administrador
-                {
-                    Email = "admin@ucb.edu.bo",
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!"),
-                    FirstName = "Admin",
-                    LastName = "Sistema"
-                };
-                await context.Administradores.AddAsync(admin);
-                await context.SaveChangesAsync();
-            }
 
             await context.MateriasPrerrequisitos.AddRangeAsync(prerrequisitos);
             await context.SaveChangesAsync();

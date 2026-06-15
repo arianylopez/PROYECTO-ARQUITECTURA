@@ -86,5 +86,26 @@ namespace PortalInfoSoftware.Application.Services
         {
             await _repository.DeleteAsync(id);
         }
+
+        public async Task ActualizarEventoAsync(Guid id, EventoCreateDTO dto)
+        {
+            var evento = await _repository.GetByIdAsync(id);
+            if (evento == null) throw new Exception("Evento no encontrado");
+
+            evento.Titulo = dto.Titulo;
+            evento.Descripcion = dto.Descripcion;
+            evento.Categoria = dto.Categoria;
+            evento.Lugar = dto.Lugar;
+
+            evento.FechaInicio = DateTime.SpecifyKind(dto.FechaInicio, DateTimeKind.Utc);
+            evento.FechaFin = DateTime.SpecifyKind(dto.FechaFin, DateTimeKind.Utc);
+
+            evento.ImageUrl = dto.ImageUrl;
+            evento.InscripcionUrl = dto.InscripcionUrl;
+            evento.MaxParticipantes = dto.MaxParticipantes;
+            evento.UpdatedAt = DateTime.UtcNow;
+
+            await _repository.UpdateAsync(evento);
+        }
     }
 }

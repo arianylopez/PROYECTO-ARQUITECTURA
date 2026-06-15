@@ -10,5 +10,6 @@ namespace PortalInfoSoftware.Application.Interfaces
         Task<ArticuloPublicoDTO> EnviarArticuloAsync(ArticuloCreateDTO dto);
         Task CambiarEstadoArticuloAsync(Guid id, ArticuloEstadoDTO dto);
         Task EliminarArticuloAsync(Guid id);
+        Task ActualizarArticuloAsync(Guid id, ArticuloCreateDTO dto);
     }
 }

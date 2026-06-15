@@ -109,5 +109,21 @@ namespace PortalInfoSoftware.Application.Services
         {
             await _repository.DeleteAsync(id);
         }
+
+        public async Task ActualizarArticuloAsync(Guid id, ArticuloCreateDTO dto)
+        {
+            var articulo = await _repository.GetByIdAsync(id);
+            if (articulo == null) throw new Exception("Artículo no encontrado");
+
+            articulo.Titulo = dto.Titulo;
+            articulo.Autor = dto.Autor;
+            articulo.Categoria = dto.Categoria;
+            articulo.Contenido = dto.Contenido;
+            articulo.ImageUrl = dto.ImageUrl;
+            articulo.TiempoLectura = dto.TiempoLectura;
+            articulo.UpdatedAt = DateTime.UtcNow;
+
+            await _repository.UpdateAsync(articulo);
+        }
     }
 }

@@ -68,5 +68,20 @@ namespace PortalInfoSoftware.API.Controllers
             await _articulosService.EliminarArticuloAsync(id);
             return NoContent();
         }
+
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutArticulo(Guid id, [FromBody] ArticuloCreateDTO dto)
+        {
+            try
+            {
+                await _articulosService.ActualizarArticuloAsync(id, dto);
+                return Ok(new { mensaje = "Artículo actualizado exitosamente" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+        }
     }
 }

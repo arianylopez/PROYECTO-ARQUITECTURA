@@ -1,18 +1,63 @@
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
+using PortalInfoSoftware.API.Middlewares;
 using PortalInfoSoftware.Infrastructure.Persistence;
 using PortalInfoSoftware.Infrastructure.Seeders;
+using System.Text;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Portal Info Software UCB API", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Autenticación JWT. Escribe 'Bearer {tu_token}'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<ApplicationDbContext>("BaseDeDatosPostgreSQL");
 
 builder.Services.AddScoped<PortalInfoSoftware.Application.Interfaces.IMallaRepository, PortalInfoSoftware.Infrastructure.Repositories.MallaRepository>();
 builder.Services.AddScoped<PortalInfoSoftware.Application.Interfaces.IMallaService, PortalInfoSoftware.Application.Services.MallaService>();
@@ -28,7 +73,6 @@ builder.Services.AddScoped<PortalInfoSoftware.Application.Interfaces.IVidaEstudi
 builder.Services.AddScoped<PortalInfoSoftware.Application.Interfaces.IVidaEstudiantilService, PortalInfoSoftware.Application.Services.VidaEstudiantilService>();
 builder.Services.AddScoped<PortalInfoSoftware.Application.Interfaces.IInformacionRepository, PortalInfoSoftware.Infrastructure.Repositories.InformacionRepository>();
 builder.Services.AddScoped<PortalInfoSoftware.Application.Interfaces.IInformacionService, PortalInfoSoftware.Application.Services.InformacionService>();
-
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -48,6 +92,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -72,8 +118,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseCors("AllowAll");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();
