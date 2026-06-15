@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalInfoSoftware.Domain",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalInfoSoftware.Infrastructure", "PortalInfoSoftware.Infrastructure\PortalInfoSoftware.Infrastructure.csproj", "{FA7DFB30-D492-4E97-A25C-D952D2A62824}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalInfoSoftware.Tests", "PortalInfoSoftware.Tests\PortalInfoSoftware.Tests.csproj", "{B6C6FF50-FBCD-4313-98C9-67113802298F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{FA7DFB30-D492-4E97-A25C-D952D2A62824}.Release|x64.Build.0 = Release|Any CPU
 		{FA7DFB30-D492-4E97-A25C-D952D2A62824}.Release|x86.ActiveCfg = Release|Any CPU
 		{FA7DFB30-D492-4E97-A25C-D952D2A62824}.Release|x86.Build.0 = Release|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Debug|x64.Build.0 = Debug|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Debug|x86.Build.0 = Debug|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Release|x64.ActiveCfg = Release|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Release|x64.Build.0 = Release|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B6C6FF50-FBCD-4313-98C9-67113802298F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
