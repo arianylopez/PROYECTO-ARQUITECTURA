@@ -1,0 +1,4 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+GET - Eventos Proximos,100,11,2,193,23.24,0.000%,10.31779,14.77,1.45,1466.0
+GET - Articulos Publicados,100,8,2,38,8.30,0.000%,10.47889,50.17,1.33,4903.0
+TOTAL,200,9,2,193,17.50,0.000%,20.62919,64.15,2.76,3184.5
