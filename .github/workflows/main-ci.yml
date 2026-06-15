@@ -43,6 +43,10 @@ jobs:
 
   zap_scan:
     runs-on: ubuntu-latest
+    needs: build-and-test-backend
+    permissions:
+      issues: write
+      contents: read
     services:
       postgres:
         image: postgres:15
@@ -71,10 +75,10 @@ jobs:
           ConnectionStrings__DefaultConnection: "Host=localhost;Database=portal_software_db;Username=postgres;Password=password"
         run: |
           dotnet run --project PortalInfoSoftware.API &
-          sleep 20 # Esperamos 20 seg a que levante la API y corran las migraciones
+          sleep 20
           
       - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.12.0 
+        uses: zaproxy/action-baseline@v0.12.0
         with:
-          target: 'http://localhost:5211'
-          fail_action: false 
+          target: 'http://localhost:5211/api/Eventos'
+          fail_action: false
